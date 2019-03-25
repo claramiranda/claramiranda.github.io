@@ -1,0 +1,156 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Pong</title>
+		<style>
+			html {
+				background-color:lightblue;
+			}
+
+			canvas{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				background-color:black;
+				margin-top: -300px;
+				margin-left: -300px;
+			}				
+		</style>
+	</head>
+
+	<body>
+		<canvas height="600" width="600" id="mycanvas"></canvas>
+		<script>
+			var canvas = document.getElementById("mycanvas"); 
+			var ctx = canvas.getContext("2d"); //dá o contexto de 2d pra tudo
+			var teclas = {};
+			
+			var bola = { <!--Objeto da bola>
+				x: (canvas.width / 2) - 15, <!-- Valor de X e Y>
+				y: (canvas.width / 2) - 15,
+				altura: 30, <!--Tamanho da bola>
+				largura: 30,
+				dirx: -1, <!--Direção de x e y>
+				diry: 1,
+				mod: 0, <!--Controla a aceleração da bola de acordo com as rebatidas>
+				speed: 0.5
+			};
+			
+			var esquerda = {
+				x:10, <!--pra não ficar colado na borda>
+				y:canvas.height / 2 - 60,
+				altura: 120,
+				largura: 30,
+				score: 0,
+				speed: 15
+			};
+			
+			var direita = {
+				x:560,
+				y:canvas.height/2 - 60,
+				altura:120,
+				largura: 30,
+				score: 0,
+				speed: 15
+			};
+
+
+
+
+			document.addEventListener("keydown", function(e) {
+				teclas[e.keyCode] = true;
+			}, false);
+			
+			document.addEventListener("keyup", function(e){
+				delete teclas[e.keyCode];
+			},false);
+
+
+
+			function movebloco() {
+				if ( 87 in teclas && esquerda.y > 0){
+					esquerda.y = esquerda.y - esquerda.speed;				
+				}
+				
+				else if (83 in teclas && esquerda.y + esquerda.altura <= canvas.height){
+					esquerda.y = esquerda.y + esquerda.speed;
+				}			
+			
+				if (38 in teclas && direita.y > 0){
+					direita.y = direita.y - direita.speed;				
+				}
+				
+				else if (40 in teclas && direita.y + direita.altura < canvas.height){
+					direita.y = direita.y + direita.speed;
+				}
+				
+			};
+
+
+
+			function movebola(){
+				if (bola.y + bola.altura >= esquerda.y && bola.y <= esquerda.y + esquerda.altura && bola.x <= esquerda.x + esquerda.largura){
+					bola.dirx = 1;
+					bola.mod += 0.2;
+				}
+				else if (bola.y + bola.altura >= direita.y && bola.y <= direita.y + direita.altura && bola.x + bola.largura >= direita.x){
+					bola.dirx = -1;
+					bola.mod += 0.2;
+				}
+				if (bola.y <= 0)
+					bola.diry = 1;				
+			
+				else if (bola.y + bola.altura >= canvas.height)
+					bola.diry = -1;
+				
+				
+				bola.x += (bola.speed + bola.mod) * bola.dirx;
+				bola.y += (bola.speed + bola.mod) * bola.diry;
+
+
+				if(bola.x < esquerda.x + bola.largura - 15){
+					newgame("player 2");
+				}
+				else if (bola.x + bola.largura > direita.x + 15){
+					newgame("player 1");
+				}
+			};
+			
+			
+			function newgame(winner){
+				if (winner == "player 1"){
+					esquerda.score++;
+				}
+
+				else {
+					direita.score++;
+				}
+				esquerda.y = canvas.height / 2 - esquerda.altura / 2;
+				direita.y = esquerda.y;
+				bola.y = canvas.height / 2 - bola.altura / 2;
+				bola.x = canvas.width / 2 - bola.largura / 2;
+				bola.mod = 0;
+			};
+
+			function desenha () {
+				ctx.clearRect(0,0, canvas.width, canvas.height);
+				movebloco();
+				movebola();
+
+				ctx.fillStyle = "yellow";
+				ctx.fillRect(esquerda.x, esquerda.y, esquerda.largura, esquerda.altura);
+				ctx.fillRect(direita.x, direita.y, direita.largura, direita.altura);
+				ctx.fillRect(bola.x, bola.y, bola.largura, bola.altura);
+
+				ctx.font = "30px Arial";
+				ctx.fillText(+esquerda.score, 50 , 30);
+				ctx.fillText(+direita.score, canvas.width -140 , 30);
+			}
+			
+		setInterval(desenha,10);
+
+
+		</script>
+	
+	</body>
+</html>
