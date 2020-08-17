@@ -1,6 +1,8 @@
 import React from 'react';
 import {Row, Col, Card, Button} from 'react-materialize';
 import avatar from '../../images/linkedin.jpeg';
+import github_logo from '../../images/github.png';
+import linkedin_logo from '../../images/linkedin.png';
 import './style.css';
 
 const UserProfile = () => (
@@ -12,13 +14,16 @@ const UserProfile = () => (
         </Row>
         <Row className="center-align">
             <h5>Clara Anna Miranda</h5>
-            <p className="grey darken-2 white-text">Software Developer</p>
+            <p className="grey darken-2 white-text">Back-End Developer</p>
         </Row>
+        
         <Row>
-            25 anos, São Paulo - SP 
-            <br/>
             Java, Android, C/C++
+            <br/>
+            São Paulo, SP
         </Row>
+        <a href="http://github.com/claramiranda" target="_blank"> <img src={github_logo} className="circle responsive-img " /> </a>
+        <a href="http://www.linkedin.com/in/cannamiranda/" target="_blank"> <img src={linkedin_logo} className="responsive-img " /> </a>
 
     </Card>
 );
