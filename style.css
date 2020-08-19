@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body{
+    
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+ 
+
+nav{
+    background-color:#9b6a6c;
+    color: white;
+    
+}
+
+nav li{
+    padding: 2%;
+}
+nav li:hover{
+    background-color:#e2b4bd;
+    color: white;
+}
+
+nav li a{
+    text-decoration: none;
+    color:white ;
+    font: impact;
+}
+
+.dropdown-menu {
+    background-color:#e2b4bd;
+}
+.dropdown-menu:hover {
+    background-color:#e2b4bd;
+}
+
+main{
+    
+}
+
+footer{
+    text-align: center;
+    background-color:#9b6a6c;
+    color: white;
+    padding: 2%;
+}
+
